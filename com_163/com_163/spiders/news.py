@@ -2,7 +2,7 @@
 import scrapy
 from ..items import ThreadItem
 import time, datetime
-import urlparse
+import six
 import logging
 from scrapy.linkextractors import LinkExtractor
 from scrapy.link import Link
@@ -67,8 +67,8 @@ class NewsSpider(scrapy.Spider):
             if link.startswith('javascript'):
                 continue
 
-            link = urlparse.urljoin(response.url, link)
-            url, fragment = urlparse.urldefrag(link)
+            link = six.moves.urllib.parse.urljoin(response.url, link)
+            url, fragment = six.moves.urllib.parse.urldefrag(link)
             link_obj = Link(url =url, text=title, fragment=fragment)
             yield link_obj
 
